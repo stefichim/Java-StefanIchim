@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -17,6 +20,11 @@ public class DrawingPanel extends JPanel {
 	final static int W = 800, H = 600;
 	BufferedImage image;  //the offscreen image
 	Graphics2D graphics;  //the "tools" needed to draw in the image  
+	
+    	String imageLoad;
+	  //List<Shape> shapes = new LinkedList<>();//am creat o lista de forme
+	  //List<Color> colors = new LinkedList<>();//am creat o lista de culori
+	  
 	
 	public DrawingPanel(MainFrame frame) {
 		this.frame = frame; createOffscreenImage(); 
