@@ -5,16 +5,12 @@ import java.util.List;
 
 public class Board {
 
-	  private List<Token> tokens = new ArrayList<>();//lista de tokens
-	  
-	  public Board(int n)//n este dimnesiunea tablei
-	    {
-	        for(int i = 1; i <= n; i++)
-	        {
-	            tokens.add(new Token(i, true));
-	        }
-	    }
-
+	 static List<Token> tokens = new ArrayList<>();//lista de tokens
+	 int number; 
+	 
+	 public void addToken(Token x) {//functie cu care adaug token-uri pe board
+		 tokens.add(x);
+	 }
 	public List<Token> getTokens() {
 		return tokens;
 	}
@@ -23,9 +19,9 @@ public class Board {
 		this.tokens = tokens;
 	}
 
-	public Board(List<Token> tokens) {
+	public Board(int numar) {
 		super();
-		this.tokens = tokens;
+		this.number = numar;
 	}
 	  
 	  

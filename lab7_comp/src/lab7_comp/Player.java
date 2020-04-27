@@ -1,52 +1,86 @@
 package lab7_comp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Player implements Runnable {
 
-	  private String name;
-	  private List<Token> tokens = new ArrayList<>();
-	
-	
-	static void printAP(int a, int d, int n)  { //metoda care calculeaza progresia aritmetica
-	 
-		int curentTerm; 
-		curentTerm=a; 
-		for (int i = 1; i <= n; i++)  {
-			System.out.print(curentTerm + " "); 
-		 curentTerm =curentTerm + d; 
-		}
-	} 
-	public Player(String name, List<Token> tokens) {
-		super();
-		this.name = name;
-		this.tokens = tokens;
-	}
-	
-	
-	
-			@Override
-	public void run() {
-			// TODO Auto-generated method stub
-			
-	}	
-	public String getName() {
-			return name;
-		}
-	public void setName(String name) {
-			this.name = name;
-		}
-	
-	
-	
-	public List<Token> getTokens() {
-			return tokens;
-		}
-	
-	
-	
-	public void setTokens(List<Token> tokens) {
-			this.tokens = tokens;
-		}
+    private final String name;
+    private boolean ok = true;
+    public static Board board;
+    public static volatile int indicativPlayer=0;  
+    public static volatile int randJucator=1;
+    List<Token> tokenPlayer = new ArrayList<>();
+    static List<Token> list;
+    public Player(String name) {
+
+        this.name = name;
+    }
+
+    static void setBoard(Board board) {
+        Player.board = board;
+        Player.list=Collections.synchronizedList(board.tokens);
+    }
+
+    @Override
+
+    public void run() {
+        indicativPlayer++;
+       
+        int nrPlayer=indicativPlayer;
+        while (ok) {
+                
+                synchronized(list)
+                        {   if(nrPlayer==randJucator)
+                        {if (list.isEmpty()) {
+                    System.out.println("Totii playeri au castigat");
+                    System.exit(0);
+
+                }
+                Random rand = new Random();
+                int i = rand.nextInt(list.size());
+                while (i == 0) {
+                    i = rand.nextInt(list.size());
+                }
+                Token t1 = list.get(i);
+
+                tokenPlayer.add(t1);
+                System.out.println("Playerul " + randJucator + " a ales " + list.get(i).getNumber());
+                if (list.get(i).getNumber() > board.number) {
+                    ok = false;
+                    System.out.println("Playerul " + randJucator + " a castigat");
+                    System.exit(0);
+                }
+                list.remove(i);
+                if(randJucator==1)
+                    randJucator=2;
+                else
+                if(randJucator==2)
+                    randJucator=3;
+                else
+                if(randJucator==3)
+                    randJucator=1;
+                list.notifyAll();
+                        }
+                else    
+                        try {
+                            list.wait();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+        }
+    }}
+
+    @Override
+    public String toString() {
+        return "Player{" + "name=" + name + '}';
+    }
+
 }
