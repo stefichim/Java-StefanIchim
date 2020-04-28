@@ -18,7 +18,7 @@ class ClientThread extends Thread {
 			String request = in.readLine();
 			// Send the response to the output stream: server-> client
 			PrintWriter out = new PrintWriter(socket.getOutputStream());
-			String raspuns = "Hello " + request + "!";
+			String raspuns = "Helloooooooo " + request + "!";
 			out.println(raspuns);
 			out.flush();
 		} catch (IOException e) {
