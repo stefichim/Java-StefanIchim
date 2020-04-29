@@ -29,7 +29,7 @@ public class GameClient {
 				
 				String response = in.readLine();
 				System.out.println(response);
-				if(response.equals("Server stooped")|| response.equals("Connection closed"))
+				if(response.equals("Server stopped")|| response.equals("Connection Closed"))
 					break;
 				}
 			} catch (UnknownHostException e) {

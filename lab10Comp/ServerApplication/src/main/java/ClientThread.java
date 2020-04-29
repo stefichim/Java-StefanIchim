@@ -26,6 +26,7 @@ class ClientThread extends Thread {
 				raspuns = "Server stopped";
 				out.println(raspuns);
 				out.flush();
+
 				try {
 					socket.close();
 					System.exit(0); 
@@ -36,6 +37,7 @@ class ClientThread extends Thread {
 				raspuns = "Connection Closed";
 				out.println(raspuns);
 				out.flush();
+				
 				try {
 					socket.close();
 				} catch (IOException e) {
