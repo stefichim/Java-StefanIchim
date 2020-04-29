@@ -13,19 +13,45 @@ class ClientThread extends Thread {
 
 	public void run() {
 		try {
-// Get the request from the input stream: client ->server
+			// Get the request from the input stream: client ->server
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String request = in.readLine();
 			// Send the response to the output stream: server-> client
+
 			PrintWriter out = new PrintWriter(socket.getOutputStream());
-			String raspuns = "Helloooooooo " + request + "!";
+			String raspuns;
+			switch (request) {
+			//case-uri pentru fiecare posibiltate: stop, exit sau orice comanda
+			case "stop":
+				raspuns = "Server stopped";
+				out.println(raspuns);
+				out.flush();
+				try {
+					socket.close();
+					System.exit(0); 
+				} catch (IOException e) {
+					System.err.println(e);
+				}
+			case "exit":
+				raspuns = "Connection Closed";
+				out.println(raspuns);
+				out.flush();
+				try {
+					socket.close();
+				} catch (IOException e) {
+					System.err.println(e);
+				}
+			default:
+				raspuns = "Server received the request  " + request;
+				break;
+			}
 			out.println(raspuns);
 			out.flush();
 		} catch (IOException e) {
 			System.err.println("Communication error... " + e);
 		} finally {
 			try {
-				socket.close(); // or use try-with-resources
+				socket.close(); 
 			} catch (IOException e) {
 				System.err.println(e);
 			}

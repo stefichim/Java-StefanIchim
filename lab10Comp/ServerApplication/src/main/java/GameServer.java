@@ -5,7 +5,7 @@ import java.net.Socket;
 public class GameServer {
 
 	// Define the port on which the server is listening
-	public static final int PORT = 8101;
+	public static final int PORT = 8102;
 
 	public GameServer() throws IOException {
 		ServerSocket serverSocket = null;
