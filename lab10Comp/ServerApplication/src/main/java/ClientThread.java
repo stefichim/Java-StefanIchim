@@ -6,9 +6,13 @@ import java.net.Socket;
 
 class ClientThread extends Thread {
 	private Socket socket = null;
+	private Signal signal;
 
-	public ClientThread(Socket socket) {
+	public ClientThread(Socket socket, 	Signal signal) {
 		this.socket = socket;
+		
+		this.signal=signal;
+	
 	}
 
 	public void run() {
@@ -17,7 +21,7 @@ class ClientThread extends Thread {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String request = in.readLine();
 			// Send the response to the output stream: server-> client
-
+			
 			PrintWriter out = new PrintWriter(socket.getOutputStream());
 			String raspuns;
 			switch (request) {
@@ -26,6 +30,8 @@ class ClientThread extends Thread {
 				raspuns = "Server stopped";
 				out.println(raspuns);
 				out.flush();
+				
+				signal.setValue(true); // setez semnalul pe true
 
 				try {
 					socket.close();

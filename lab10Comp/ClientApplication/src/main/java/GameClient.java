@@ -16,25 +16,25 @@ public class GameClient {
 			try (Socket socket = new Socket(serverAddress, PORT);
 					PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
+				while (true) {
 				// Send a request to the server
-				while(true) {
+
 				String request;
 				System.out.println("Specify the command");
-				 Scanner myObj=new Scanner(System.in);
-				 request=myObj.nextLine();
+				Scanner myObj = new Scanner(System.in);
+				request = myObj.nextLine();
 				out.println(request);
-				
+
 				// Wait the response from the server ("Hello World!")
-				
+
 				String response = in.readLine();
 				System.out.println(response);
-				if(response.equals("Server stopped")|| response.equals("Connection Closed"))
+				if (response.equals("Server stopped") || response.equals("Connection Closed"))
 					break;
 				}
 			} catch (UnknownHostException e) {
 				System.err.println("No server listening... " + e);
 			}
+		}
 	}
 
-}
