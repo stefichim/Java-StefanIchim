@@ -18,7 +18,7 @@ public class GameServer {
 		while (true) {
 			try {
 
-				//serverSocket.setSoTimeout(10000);
+				serverSocket.setSoTimeout(10000);
 				
 				System.out.println("Waiting for a client ...");
 				Socket socket = serverSocket.accept();
